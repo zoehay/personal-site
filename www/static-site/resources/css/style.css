@@ -1,7 +1,6 @@
 :root {
   --main-bg-color: #ebf5ee;
-  --bg-color-1: #092327;
-  --bg-color-1-shadow: #f5f7f3;
+  --main-text-color: #092327;
   --accent-bold-1: #1b2845;
   --accent-bold-2: #c97b84;
   --accent-light-1: #bfd1e5;
@@ -13,11 +12,11 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  font-size: 0.85rem;
+  font-size: 1rem;
   background-color: var(--main-bg-color);
   opacity: 0.9;
   text-align: center;
-  color: var(--bg-color-1);
+  color: var(--main-text-color);
   width: 100%;
   margin: 0rem;
 }
@@ -49,17 +48,8 @@ body {
 .nav-logo {
   display: flex;
   align-items: center;
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin: 0 1rem;
-  font-family: serif;
-}
-
-h1 {
-  font-size: 1.25rem;
-}
-
-h2 {
-  font-size: 1.15rem;
 }
 
 .nav-menu {
@@ -78,10 +68,10 @@ h2 {
 .nav-link {
   display: flex;
   align-items: center;
-  width: min-content;
+  width: auto;
   height: 100%;
   box-sizing: border-box;
-  margin: 0 1rem;
+  margin: 0 1.5rem;
   text-decoration: none;
   color: var(--accent-bold-1);
 }
@@ -134,7 +124,7 @@ h2 {
   justify-content: left;
 }
 
-.project {
+.projects {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
