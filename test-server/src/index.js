@@ -1,4 +1,7 @@
 const express = require("express");
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 const app = express();
 const PORT = 8000;
 const cors = require("cors");
@@ -14,25 +17,9 @@ app.use(
   })
 );
 
-app.get("/products", (req, res) => {
+app.get("/products", async (req, res) => {
   console.log("get products");
-  const products = [
-    {
-      name: "Shovel",
-      description: "It's like a big spoon for dirt and stuff.",
-      price: 9.0,
-    },
-    {
-      name: "Bug Net",
-      description: "Catch those creepy crawlies.",
-      price: 11.0,
-    },
-    {
-      name: "Fishing Rod",
-      description: "A rod used for fishing and the like.",
-      price: 12.6,
-    },
-  ];
+  const products = await prisma.product.findMany();
   return res.json({ products });
 });
 
