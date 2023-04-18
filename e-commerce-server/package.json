@@ -1,0 +1,60 @@
+{
+  "name": "e-commerce",
+  "version": "1.0.0",
+  "description": "\"# e-commerce\"",
+  "main": "index.js",
+  "scripts": {
+    "dev-init": "prisma migrate dev --schema=./prisma/schema.prisma --name=dev",
+    "dev": "nodemon src/index.js",
+    "test-init": "prisma migrate dev --schema=./prisma/test.schema.prisma --name=test",
+    "test": "jest --runInBand",
+    "test-reset": "prisma migrate reset --schema=./prisma/test.schema.prisma",
+    "create-admin": "node scripts/create-admin.js",
+    "seed": "node prisma/seed.js",
+    "scp-ec2": "scp -r /Users/zoehay/Projects/e-commerce/backend/src /Users/zoehay/Projects/e-commerce/backend/package.json /Users/zoehay/Projects/e-commerce/backend/package-lock.json /Users/zoehay/Projects/e-commerce/backend/prisma ec2-user@44.239.28.78:/home/ec2-user/dev/personal-site/e-commerce-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoehay/e-commerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoehay/e-commerce/issues"
+  },
+  "homepage": "https://github.com/zoehay/e-commerce#readme",
+  "dependencies": {
+    "@prisma/client": "^4.5.0",
+    "@quixo3/prisma-session-store": "^3.1.10",
+    "bcrypt": "^5.1.0",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "jest-config": "29.2.2",
+    "morgan": "^1.10.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.14",
+    "@types/jest": "29.2.0",
+    "@types/node": "18.11.6",
+    "@types/supertest": "2.0.12",
+    "jest": "29.2.2",
+    "jest-environment-node": "29.2.2",
+    "nanoid": "4.0.0",
+    "nodemon": "^2.0.20",
+    "prisma": "^4.5.0",
+    "supertest": "^6.3.1",
+    "supertest-session": "^4.1.0",
+    "ts-jest": "29.0.3",
+    "ts-node": "10.9.1",
+    "typescript": "4.8.4"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  }
+}
