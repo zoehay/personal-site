@@ -8,18 +8,15 @@ const { userRepository } = require("../repository/repository");
 // #TODO: error messages for auth
 const checkAuthorization = (req, res, next) => {
   if (!req.user?.id) {
-    console.log("no user");
-    return res.sendStatus(401);
+    return res.status(401).json({ message: "No user" });
   } else {
     next();
   }
 };
 
 const checkAdmin = (req, res, next) => {
-  console.log("check admin");
   if (req.user.isAdmin == false) {
-    console.log("unauthorized");
-    return res.sendStatus(401);
+    return res.status(401).json({ message: "Not authorized" });
   } else {
     console.log("authorized");
     next();
@@ -78,7 +75,9 @@ authRouter.get("/login", (req, res, next) => {
 authRouter.post(
   "/login",
   passport.authenticate("password", {
-    failureRedirect: "/auth/login"
+    successRedirect: "/user",
+    failureRedirect: "/auth/login",
+    failureFlash: true,
   }),
   async (req, res) => {
     if (req.user) {
@@ -111,7 +110,7 @@ authRouter.post("/register", async (req, res) => {
       userName,
       hashedPassword
     );
-    // TODO: fix redirect and log user in
+    // TODO: fix redirect
     res.send(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -123,7 +122,7 @@ authRouter.post("/logout", (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.sendStatus(200);
+    res.status(200).json({ message: "User logged out" });
   });
 });
 
