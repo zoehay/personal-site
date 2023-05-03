@@ -35,9 +35,7 @@ passport.use(
     try {
       user = await userRepository.getUserByEmail(email);
       if (!user) {
-        console.log("user not found");
-        // return done(null, false, { message: "User email not found" });
-        return done(null, false);
+        return done(null, false, { message: "User email not found" });
       }
       console.log("found user");
       const match = await bcrypt.compare(password, user.password);
@@ -75,16 +73,15 @@ authRouter.get("/login", (req, res, next) => {
 authRouter.post(
   "/login",
   passport.authenticate("password", {
-    successRedirect: "/user",
     failureRedirect: "/auth/login",
-    failureFlash: true,
+    failureMessage: true,
   }),
   async (req, res) => {
     if (req.user) {
       const user = await userRepository.getUserById(req.user.id);
       res.status(200).json({ user });
     } else {
-      console.log("no user");
+      res.status(400).json({ message: "No user" });
     }
   }
 );
@@ -92,15 +89,15 @@ authRouter.post(
 authRouter.post("/register", async (req, res) => {
   const { email, userName, password } = req.body || undefined;
   if (!email || !password) {
-    console.log("Email and password required");
-    return res.sendStatus(302);
+    return res.status(400).json({ message: "Email and password required" });
   }
   try {
     // check if already registered
     const existingUser = await userRepository.getUserByEmail(email);
     if (existingUser) {
-      console.log("User with email already exists");
-      return res.sendStatus(302);
+      return res
+        .status(400)
+        .json({ message: "User with email already exists" });
     }
     // create user
     const salt = await bcrypt.genSalt(10);
@@ -110,8 +107,7 @@ authRouter.post("/register", async (req, res) => {
       userName,
       hashedPassword
     );
-    // TODO: fix redirect
-    res.send(user);
+    res.status(200).json({ user });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
