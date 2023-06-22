@@ -19,9 +19,11 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+const CORS_ALLOW_ORIGIN = ["https://zoemhay.com", "https://angular-e-commerce.zoemhay.com"]
 app.use(
   cors({
-    origin: process.env.CORS_ALLOW_ORIGIN,
+    // origin: process.env.CORS_ALLOW_ORIGIN,
+    origin: CORS_ALLOW_ORIGIN,
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
     allowedHeaders: ["content-type", "cookie", "credentials"],
