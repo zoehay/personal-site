@@ -174,9 +174,17 @@ p {
 }
 
 hr {
-  width: 90%;
+  width: 95%;
   border: none;
   margin-left: 0rem;
   background-color: var(--accent-bold-3);
-  height: 0.15rem;
+  height: 0.12rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-bottom: 0rem;
 }
