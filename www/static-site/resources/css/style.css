@@ -128,7 +128,7 @@ p {
   object-fit: scale-down;
   border-radius: 7rem;
   height: 25rem;
-  box-shadow: 0.75rem 0.5rem 0.5rem var(--accent-light-2);
+  box-shadow: 0.5rem 0.45rem 0.5rem var(--accent-light-2);
 }
 
 .about {
@@ -160,7 +160,7 @@ p {
   width: 25%;
   object-fit: scale-down;
   border-radius: 3rem;
-  box-shadow: 0.75rem 0.5rem 0.5rem var(--accent-light-2);
+  box-shadow: 0.5rem 0.45rem 0.5rem var(--accent-light-2);
 }
 
 .about-link {
@@ -171,4 +171,12 @@ p {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+hr {
+  width: 90%;
+  border: none;
+  margin-left: 0rem;
+  background-color: var(--accent-bold-3);
+  height: 0.15rem;
 }
