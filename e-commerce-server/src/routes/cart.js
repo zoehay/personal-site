@@ -1,5 +1,5 @@
 const express = require("express");
-const { prisma, cartProductRepository } = require("../repository/repository");
+const { cartProductRepository } = require("../repository/repository");
 const { checkAuthorization } = require("./auth");
 
 const cartRouter = express.Router();
@@ -16,9 +16,6 @@ cartRouter.post("/", async (req, res, next) => {
   }
 
   const quantity = Number(req.body.quantity);
-  if (quantity === 1) {
-    return next();
-  }
 
   try {
     if (quantity === 0) {
@@ -108,10 +105,8 @@ cartRouter.get("/details", async (req, res) => {
 cartRouter.delete("/", async (req, res) => {
   const userId = req.user.id;
   try {
-    const count = await cartProductRepository.clearUserCart(
-      userId
-    );
-    return res.status(200).json({ count });
+    const count = await cartProductRepository.clearUserCart(userId);
+    return res.status(200).json(count);
   } catch (error) {
     return res.status(400).json({ error });
   }

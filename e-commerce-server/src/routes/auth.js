@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const authRouter = express.Router();
 const { userRepository } = require("../repository/repository");
 
-// #TODO: error messages for auth
 const checkAuthorization = (req, res, next) => {
   if (!req.user?.id) {
     return res.status(401).json({ message: "No user" });
@@ -18,7 +17,6 @@ const checkAdmin = (req, res, next) => {
   if (req.user.isAdmin == false) {
     return res.status(401).json({ message: "Not authorized" });
   } else {
-    console.log("authorized");
     next();
   }
 };
@@ -37,7 +35,6 @@ passport.use(
       if (!user) {
         return done(null, false, { message: "User email not found" });
       }
-      console.log("found user");
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
         return done(null, false, { message: "Incorrect email or password" });
@@ -63,11 +60,6 @@ passport.deserializeUser(async (id, done) => {
   } catch (err) {
     done(err);
   }
-});
-
-authRouter.get("/login", (req, res, next) => {
-  console.log("loginpage");
-  res.status(200).json({ message: "login page" });
 });
 
 authRouter.post(

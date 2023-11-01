@@ -22,7 +22,7 @@ app.use(cookieParser());
 const CORS_ALLOW_ORIGIN = ["https://zoemhay.com", "https://angular-e-commerce.zoemhay.com"]
 app.use(
   cors({
-    // origin: process.env.CORS_ALLOW_ORIGIN,
+    // origin: process.env.CORS_ALLOW_ORIGIN.split(" "),
     origin: CORS_ALLOW_ORIGIN,
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
