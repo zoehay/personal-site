@@ -6,6 +6,14 @@ const prisma = new PrismaClient({ log: ["query"] });
 
 async function main() {
   console.log("Seed");
+
+  let checkForProducts = await prisma.product.findMany();
+  console.log(checkForProducts, checkForProducts.length);
+  if (checkForProducts.length > 0) {
+    console.log("Products already seeded");
+    return;
+  }
+
   let products = [
     {
       name: "Shovel",

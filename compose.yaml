@@ -1,0 +1,61 @@
+version: "3"
+
+services:
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    tty: true
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: prisma_e_commerce
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: pg_isready -U postgres
+    networks:
+      - node-network
+
+  e-commerce-server:
+    container_name: e-commerce-server
+    build:
+      context: e-commerce-server
+    working_dir: /usr/src/app
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: prisma_e_commerce
+    ports:
+      - 8000:8000
+    # command: npm run dev
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./e-commerce-server:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - node-network
+
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    restart: always
+    tty: true
+    ports:
+      - "80:80"
+    networks:
+      - node-network
+    depends_on:
+      - db
+      - e-commerce-server
+
+networks:
+  node-network:
+    driver: bridge
