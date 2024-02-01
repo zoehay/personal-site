@@ -8,12 +8,16 @@ services:
     tty: true
     volumes:
       - ./data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB_FILE: /run/secrets/db_name
+    secrets:
+      - db_user
+      - db_password
+      - db_name
     healthcheck:
       test: pg_isready -U postgres
     networks:
@@ -53,3 +57,11 @@ services:
 networks:
   node-network:
     driver: bridge
+
+secrets:
+  db_user:
+    file: ./secrets/db_user.txt
+  db_password:
+    file: ./secrets/db_password.txt
+  db_name:
+    file: ./secrets/db_name.txt
