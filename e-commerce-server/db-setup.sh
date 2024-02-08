@@ -2,9 +2,10 @@
 
 DB_HOST="db"
 DB_PORT="5432"
-DB_USER="postgres"
-DB_PASSWORD="postgres"
-DB_NAME="prisma_e_commerce"
+DB_USER=$db_user
+DB_PASSWORD=$db_password
+DB_NAME=$db_name
+
 MAX_ATTEMPTS=30
 SLEEP_SECONDS=5
 

@@ -36,6 +36,14 @@ services:
     volumes:
       - ./e-commerce-server:/usr/src/app
       - /usr/src/app/node_modules
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB_FILE: /run/secrets/db_name
+    secrets:
+      - db_user
+      - db_password
+      - db_name
     networks:
       - node-network
 
