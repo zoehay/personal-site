@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const cors = require("cors");
-require("dotenv").config();
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
@@ -12,18 +11,17 @@ const userRouter = require("./routes/user");
 const { authRouter } = require("./routes/auth");
 const cartRouter = require("./routes/cart");
 const adminRouter = require("./routes/admin");
-const { prisma, userRepository } = require("./repository/repository");
+const { prisma } = require("./repository/repository");
 
 const app = express();
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-const CORS_ALLOW_ORIGIN = ["https://zoemhay.com", "https://angular-e-commerce.zoemhay.com"]
+
 app.use(
   cors({
-    // origin: process.env.CORS_ALLOW_ORIGIN.split(" "),
-    origin: CORS_ALLOW_ORIGIN,
+    origin: process.env.CORS_ALLOW_ORIGIN.split(" "),
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
     allowedHeaders: ["content-type", "cookie", "credentials"],
