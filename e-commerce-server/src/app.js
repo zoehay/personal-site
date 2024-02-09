@@ -11,7 +11,7 @@ const userRouter = require("./routes/user");
 const { authRouter } = require("./routes/auth");
 const cartRouter = require("./routes/cart");
 const adminRouter = require("./routes/admin");
-const { prisma, userRepository } = require("./repository/repository");
+const { prisma } = require("./repository/repository");
 
 const app = express();
 app.use(logger("dev"));
