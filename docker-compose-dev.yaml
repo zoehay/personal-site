@@ -1,0 +1,80 @@
+version: "3"
+
+services:
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    tty: true
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB_FILE: /run/secrets/db_name
+    secrets:
+      - db_user
+      - db_password
+      - db_name
+    healthcheck:
+      test: pg_isready -U postgres
+    networks:
+      - node-network
+
+  e-commerce-server:
+    container_name: e-commerce-server
+    build:
+      context: e-commerce-server
+    working_dir: /usr/src/app
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./e-commerce-server:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB_FILE: /run/secrets/db_name
+    secrets:
+      - db_user
+      - db_password
+      - db_name
+    networks:
+      - node-network
+
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+      args:
+        CONFIG_FILE: "localnginx"
+    restart: always
+    tty: true
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./local-certs/certs:/etc/letsencrypt/live:ro
+    networks:
+      - node-network
+    depends_on:
+      - db
+      - e-commerce-server
+
+networks:
+  node-network:
+    driver: bridge
+
+secrets:
+  db_user:
+    file: ./secrets/db_user.txt
+  db_password:
+    file: ./secrets/db_password.txt
+  db_name:
+    file: ./secrets/db_name.txt
