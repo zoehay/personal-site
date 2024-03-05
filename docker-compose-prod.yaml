@@ -60,7 +60,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/:/etc/letsencrypt/
     networks:
       - node-network
     depends_on:
