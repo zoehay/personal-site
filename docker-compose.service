@@ -1,0 +1,15 @@
+[Unit]
+Description=Personal site docker containers
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=ec2-user
+WorkingDirectory=/home/ec2-user/dev/personal-site
+ExecStart=/usr/local/bin/docker-compose -f /home/ec2-user/dev/personal-site/docker-compose-prod.yaml up -d
+ExecStop=/usr/local/bin/docker-compose -f /home/ec2-user/dev/personal-site/docker-compose-prod.yaml down
+
+[Install]
+WantedBy=multi-user.target
