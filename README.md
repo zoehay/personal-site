@@ -3,7 +3,7 @@ Personal website with static site and e-commerce application. Docker compose sta
 
 ## For Production
 
-`deploy-docker-compose-dev.yaml` is run once to copy the docker-compose service to the new machine then enable and start the service. 
+`deploy-docker-compose-service.sh` is run once to copy the docker-compose service to the new machine then enable and start the service. Use docker-compose service to stop and start the application. 
 
 ## For Local Dev
 
